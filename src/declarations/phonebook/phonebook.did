@@ -1,0 +1,4 @@
+service : {
+  greet: (text) -> (text);
+  queryName: (text) -> (text) query;
+}
