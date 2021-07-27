@@ -1,0 +1,22 @@
+"filename", "language", "JavaScript", "JSON", "HTML", "motoko", "Markdown", "CSS", "TypeScript", "Vue", "Shell Script", "comment", "blank", "total"
+"/Users/crinstaniev/Development/dfinity/phonebook/README.md", "Markdown", 0, 0, 0, 0, 34, 0, 0, 0, 0, 0, 17, 51
+"/Users/crinstaniev/Development/dfinity/phonebook/canister_ids.json", "JSON", 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 1, 9
+"/Users/crinstaniev/Development/dfinity/phonebook/dfx.json", "JSON", 0, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35
+"/Users/crinstaniev/Development/dfinity/phonebook/launch_candid_ui.sh", "Shell Script", 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 3
+"/Users/crinstaniev/Development/dfinity/phonebook/package-lock.json", "JSON", 0, 13342, 0, 0, 0, 0, 0, 0, 0, 0, 1, 13343
+"/Users/crinstaniev/Development/dfinity/phonebook/package.json", "JSON", 0, 16, 0, 0, 0, 0, 0, 0, 0, 36, 0, 52
+"/Users/crinstaniev/Development/dfinity/phonebook/src/declarations/phonebook/index.js", "JavaScript", 19, 0, 0, 0, 0, 0, 0, 0, 0, 14, 6, 39
+"/Users/crinstaniev/Development/dfinity/phonebook/src/declarations/phonebook/phonebook.did.d.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 1, 6
+"/Users/crinstaniev/Development/dfinity/phonebook/src/declarations/phonebook/phonebook.did.js", "JavaScript", 11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 12
+"/Users/crinstaniev/Development/dfinity/phonebook/src/declarations/phonebook_assets/index.js", "JavaScript", 19, 0, 0, 0, 0, 0, 0, 0, 0, 14, 6, 39
+"/Users/crinstaniev/Development/dfinity/phonebook/src/declarations/phonebook_assets/phonebook_assets.did.d.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 117, 0, 0, 0, 1, 118
+"/Users/crinstaniev/Development/dfinity/phonebook/src/declarations/phonebook_assets/phonebook_assets.did.js", "JavaScript", 155, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 156
+"/Users/crinstaniev/Development/dfinity/phonebook/src/phonebook/Record.mo", "motoko", 0, 0, 0, 20, 0, 0, 0, 0, 0, 0, 5, 25
+"/Users/crinstaniev/Development/dfinity/phonebook/src/phonebook/main.mo", "motoko", 0, 0, 0, 52, 0, 0, 0, 0, 0, 0, 8, 60
+"/Users/crinstaniev/Development/dfinity/phonebook/src/phonebook_assets/assets/main.css", "CSS", 0, 0, 0, 0, 0, 30, 0, 0, 0, 0, 5, 35
+"/Users/crinstaniev/Development/dfinity/phonebook/src/phonebook_assets/src/App.vue", "Vue", 0, 0, 0, 0, 0, 0, 0, 54, 0, 0, 7, 61
+"/Users/crinstaniev/Development/dfinity/phonebook/src/phonebook_assets/src/index.html", "HTML", 0, 0, 15, 0, 0, 0, 0, 0, 0, 0, 2, 17
+"/Users/crinstaniev/Development/dfinity/phonebook/src/phonebook_assets/src/index.js", "JavaScript", 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 7
+"/Users/crinstaniev/Development/dfinity/phonebook/src/phonebook_assets/src/service.js", "JavaScript", 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 12
+"/Users/crinstaniev/Development/dfinity/phonebook/webpack.config.js", "JavaScript", 106, 0, 0, 0, 0, 0, 0, 0, 0, 8, 10, 124
+"Total", "-", 324, 13401, 15, 72, 34, 30, 122, 54, 1, 73, 78, 14204

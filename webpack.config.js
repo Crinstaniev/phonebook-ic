@@ -7,6 +7,9 @@ const { VueLoaderPlugin } = require("vue-loader");
 
 let localCanisters, prodCanisters, canisters;
 
+const LOCAL_II_CANISTER =
+  "http://localhost:8000?canisterId=rkp4c-7iaaa-aaaaa-aaaca-cai#authorize";
+
 function initCanisterIds() {
   try {
     localCanisters = require(path.resolve(
@@ -94,6 +97,7 @@ module.exports = {
     new webpack.EnvironmentPlugin({
       NODE_ENV: "development",
       PHONEBOOK_CANISTER_ID: canisters["phonebook"],
+      LOCAL_II_CANISTER,
     }),
     new webpack.ProvidePlugin({
       Buffer: [require.resolve("buffer/"), "Buffer"],
