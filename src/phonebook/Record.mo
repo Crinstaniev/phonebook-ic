@@ -9,8 +9,9 @@ type Entry = {
 };
 
 object class Record() {
-  let phonebook = HashMap.HashMap<Name, Entry>(0, Text.equal, Text.hash);
-  public func insert(name : Name, entry : Entry) : async () {
+  var phonebook = HashMap.HashMap<Name, Entry>(0, Text.equal, Text.hash);
+
+  public func insert(name : Name, entry : Entry) : () {
     phonebook.put(name, entry);
   };
 
@@ -18,11 +19,15 @@ object class Record() {
     return phonebook.get(name);
   };
 
+  public func delete(name : Name) : () {
+    phonebook.delete(name);
+  };
+
   public func getAll() : [(Name, Entry)] {
     return Iter.toArray(phonebook.entries());
   };
 
-  public func delete(name : Name) : () {
-    phonebook.delete(name);
+  public func fromArray(arr : [(Name, Entry)]) : () {
+    phonebook := HashMap.fromIter<Name, Entry>(arr.vals(), 10, Text.equal, Text.hash);
   };
 };

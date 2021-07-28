@@ -1,7 +1,9 @@
 import Array "mo:base/Array";
+import Debug "mo:base/Debug";
 import HashMap "mo:base/HashMap";
 import Iter "mo:base/Iter";
 import Principal "mo:base/Principal";
+import Record "Record";
 import Records "Record";
 
 actor Service {
@@ -12,7 +14,9 @@ actor Service {
     };
     type Record = Records.Record;
 
-    let books = HashMap.HashMap<Principal, Record>(0, Principal.equal, Principal.hash);
+    private stable var persist : [(Principal, [(Name, Entry)])] = [];
+
+    let books = HashMap.HashMap<Principal, Record>(10, Principal.equal, Principal.hash);
 
     public shared(msg) func callerPrincipal() : async Principal {
         return msg.caller;
@@ -50,7 +54,7 @@ actor Service {
         let book : ?Record = books.get(caller);
         switch(book) {
             case (?phonebook) {
-                ignore phonebook.insert(name, entry);
+                phonebook.insert(name, entry);
                 return "[INFO] entry inserted";
             };
             case _ {
@@ -63,12 +67,28 @@ actor Service {
         let book : ?Record = books.get(caller);
         switch(book) {
             case (?phonebook) {
-                ignore phonebook.delete(name);
+                phonebook.delete(name);
                 return "[INFO] operation success";
             };
             case _ {
                 return "[ERR] book notfound"
             };
+        };
+    };
+
+    system func preupgrade() {
+        for ((prince, map) in books.entries()) {
+            persist := Array.append([(prince, map.getAll())], persist);
+        };
+    };
+
+    system func postupgrade() {
+        for ((prince, map) in Iter.fromArray(persist)) {
+            let payload = Records.Record();
+            for ((name, entry) in Iter.fromArray(map)) {
+                payload.insert(name, entry);
+            };
+            books.put(prince, payload);
         };
     };
 };
