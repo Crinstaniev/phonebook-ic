@@ -5,6 +5,7 @@ import Iter "mo:base/Iter";
 import Principal "mo:base/Principal";
 import Record "Record";
 import Records "Record";
+import Utils "Utils";
 
 actor Service {
     type Name = Text;
@@ -13,6 +14,7 @@ actor Service {
         phone: Text;
     };
     type Record = Records.Record;
+    type Message = Utils.Message;
 
     private stable var persist : [(Principal, [(Name, Entry)])] = [];
 
@@ -36,42 +38,42 @@ actor Service {
         };
     };
 
-    public shared(msg) func createBook() : async Text {
+    public shared(msg) func createBook() : async Message {
         let caller : Principal = msg.caller;
         switch(books.get(caller)) {
             case null { 
                 let payload = Records.Record();
                 books.put(caller, payload);
-                return "[INFO] new phonebook created";
+                return Utils.signMsg("[INFO] book created", "200");
             };
             case (?record) {
-                return "[ERR] phonebook already exists";
+                return Utils.signMsg("[ERR] phonebook already exists", "500");
             };
         };
     };
 
-    public shared({ caller }) func insert(name : Name, entry : Entry) : async Text {
+    public shared({ caller }) func insert(name : Name, entry : Entry) : async Message {
         let book : ?Record = books.get(caller);
         switch(book) {
             case (?phonebook) {
                 phonebook.insert(name, entry);
-                return "[INFO] entry inserted";
+                return Utils.signMsg("[INFO] entry inserted", "200");
             };
             case _ {
-                return "[ERR] book notfound"
+                return Utils.signMsg("[ERR] book notfound", "404");
             };
         };
     };
 
-    public shared({ caller }) func delete(name : Name) : async Text {
+    public shared({ caller }) func delete(name : Name) : async Message  {
         let book : ?Record = books.get(caller);
         switch(book) {
             case (?phonebook) {
                 phonebook.delete(name);
-                return "[INFO] operation success";
+                return Utils.signMsg("[INFO] operation success", "200");
             };
             case _ {
-                return "[ERR] book notfound"
+                return Utils.signMsg("[ERR] book notfound", "404");
             };
         };
     };
