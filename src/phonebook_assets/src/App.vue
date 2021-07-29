@@ -25,14 +25,16 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app color="black" dark src="./assets/dfinity-background.jpg">
+    <v-app-bar app dark color="black" src="../assets/dfinity-background.jpg">
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
       <v-toolbar-title>IC Phonebook</v-toolbar-title>
     </v-app-bar>
 
     <v-main>
-      <router-view></router-view>
+      <div id="root-container">
+        <router-view></router-view>
+      </div>
     </v-main>
   </v-app>
 </template>
@@ -50,3 +52,12 @@ export default {
   }),
 };
 </script>
+
+<style scoped>
+#root-container {
+  height: 100%;
+  background-image: url("../assets/geometry-background.png");
+  background-size: cover;
+  opacity: 0.9;
+}
+</style>
