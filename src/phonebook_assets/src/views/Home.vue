@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import { mapMutations, mapState } from 'vuex';
+import { mapGetters, mapMutations, mapState } from 'vuex';
 import { getActor, getAuthClient } from '../service';
 import router from '../router';
 
@@ -85,11 +85,19 @@ export default {
       this.setSnackbarMsg('Please Login');
       router.push('User');
     }
+    // create book
+    const actor = await getActor(this.getIdentity());
+    this.setGlobalLoading(true);
+    await actor.createBook().then((res) => {
+      console.log(res.msg);
+    });
+    this.setGlobalLoading(false);
   },
 
   methods: {
     ...mapState(['globalLoading', 'identity', 'principal']),
     ...mapMutations(['setSnackbar', 'setSnackbarMsg', 'setGlobalLoading']),
+    ...mapGetters(['getIdentity']),
 
     async handleAdd() {
       if (!this.valid) {

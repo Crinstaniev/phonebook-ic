@@ -91,13 +91,6 @@ export default {
         const principal = identity.getPrincipal().toString();
         this.setIdentity(identity);
         this.setPrincipal(principal);
-        // create book
-        const actor = await getActor(this.getIdentity());
-        this.setGlobalLoading(true);
-        await actor.createBook().then((res) => {
-          console.log(res.msg);
-        });
-        this.setGlobalLoading(false);
       }
     },
   },
