@@ -1,4 +1,21 @@
+type Name = text;
+type Message = 
+ record {
+   code: text;
+   msg: text;
+ };
+type Entry = 
+ record {
+   desc: text;
+   phone: text;
+ };
 service : {
   callerPrincipal: () -> (principal);
-  greet: (text) -> (text) query;
+  createBook: () -> (Message);
+  delete: (Name) -> (Message);
+  getBook: () -> (opt vec record {
+                            Name;
+                            Entry;
+                          });
+  insert: (Name, Entry) -> (Message);
 }

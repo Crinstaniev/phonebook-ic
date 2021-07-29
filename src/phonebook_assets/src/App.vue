@@ -33,7 +33,9 @@
 
     <v-main>
       <div id="root-container">
-        <router-view></router-view>
+        <v-img :src="backgroundImg" height="100%">
+          <router-view></router-view>
+        </v-img>
       </div>
     </v-main>
   </v-app>
@@ -42,6 +44,7 @@
 <script>
 import { mapGetters, mapMutations } from 'vuex';
 import { getAuthClient } from './service';
+import background from '../assets/geometry-background.png';
 
 export default {
   data: () => ({
@@ -52,10 +55,11 @@ export default {
       { title: 'About', icon: 'mdi-information', to: '/about' },
     ],
     right: null,
+    backgroundImg: background,
   }),
 
-  async created() {
-    await this.checkAuthState();
+  created() {
+    this.checkAuthState();
   },
 
   methods: {
@@ -65,15 +69,12 @@ export default {
     async checkAuthState() {
       const authClient = await getAuthClient();
       const authStatus = await authClient.isAuthenticated();
-      // console.log('[INFO] auth info', authStatus);
       if (authStatus) {
         const identity = authClient.getIdentity();
         const principal = identity.getPrincipal().toString();
         this.setIdentity(identity);
         this.setPrincipal(principal);
-        // console.log('[INFO] setting result', this.getPrincipal(), this.getIdentity());
       }
-      return 'success';
     },
   },
 };
@@ -82,8 +83,6 @@ export default {
 <style scoped>
 #root-container {
   height: 100%;
-  background-image: url('../assets/geometry-background.png');
-  background-size: cover;
   opacity: 0.9;
 }
 </style>

@@ -129,6 +129,7 @@ export default {
 
     test() {
       console.log(this.getPrincipal());
+      console.log();
     },
   },
 
