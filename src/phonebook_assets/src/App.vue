@@ -40,23 +40,49 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations } from 'vuex';
+import { getAuthClient } from './service';
+
 export default {
   data: () => ({
     drawer: null,
     items: [
-      { title: "Home", icon: "mdi-home", to: "/" },
-      { title: "User", icon: "mdi-account-circle", to: "/user" },
-      { title: "About", icon: "mdi-information", to: "/about" },
+      { title: 'Home', icon: 'mdi-home', to: '/' },
+      { title: 'User', icon: 'mdi-account-circle', to: '/user' },
+      { title: 'About', icon: 'mdi-information', to: '/about' },
     ],
     right: null,
   }),
+
+  async created() {
+    await this.checkAuthState();
+  },
+
+  methods: {
+    ...mapGetters(['getIdentity', 'getPrincipal']),
+    ...mapMutations(['setPrincipal', 'setIdentity']),
+
+    async checkAuthState() {
+      const authClient = await getAuthClient();
+      const authStatus = await authClient.isAuthenticated();
+      // console.log('[INFO] auth info', authStatus);
+      if (authStatus) {
+        const identity = authClient.getIdentity();
+        const principal = identity.getPrincipal().toString();
+        this.setIdentity(identity);
+        this.setPrincipal(principal);
+        // console.log('[INFO] setting result', this.getPrincipal(), this.getIdentity());
+      }
+      return 'success';
+    },
+  },
 };
 </script>
 
 <style scoped>
 #root-container {
   height: 100%;
-  background-image: url("../assets/geometry-background.png");
+  background-image: url('../assets/geometry-background.png');
   background-size: cover;
   opacity: 0.9;
 }

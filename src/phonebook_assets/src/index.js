@@ -1,11 +1,12 @@
-import Vue from "vue";
-import App from "./App.vue";
-import VueRouter from "vue-router";
-import vuetify from "./plugins/vuetify";
-import router from "./router";
+import Vue from 'vue';
+import App from './App.vue';
+import vuetify from './plugins/vuetify';
+import router from './router';
+import store from './store';
 
 new Vue({
   ...App,
   vuetify,
-  router
-}).$mount("#app");
+  router,
+  store
+}).$mount('#app');

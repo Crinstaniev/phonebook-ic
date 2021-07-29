@@ -8,7 +8,14 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {};
+  },
+  mounted() {
+    console.log('[INFO] login status', this.$store.state.isLoggedIn);
+  },
+};
 </script>
 
 <style>
