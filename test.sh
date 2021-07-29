@@ -1,4 +1,8 @@
 #!/usr/local/bin/zsh
+echo -e "\033[32m> INIT \033[0m"
+killall dfx
+dfx start --background --clean
+dfx deploy phonebook
 echo -e "\033[32m> TEST 1 - CALLER PRINCIPAL \033[0m"
 dfx canister call phonebook callerPrincipal
 echo -e "\033[32m> TEST 2 - CREATE BOOK \033[0m"

@@ -1,16 +1,4 @@
-type Name = text;
-type Entry = 
- record {
-   desc: text;
-   phone: text;
- };
 service : {
   callerPrincipal: () -> (principal);
-  createBook: () -> (text);
-  delete: (Name) -> (text);
-  getBook: () -> (opt vec record {
-                            Name;
-                            Entry;
-                          });
-  insert: (Name, Entry) -> (text);
+  greet: (text) -> (text) query;
 }
