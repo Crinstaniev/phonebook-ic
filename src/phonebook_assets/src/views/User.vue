@@ -85,7 +85,7 @@
 
 <script>
 import { getAuthClient } from '../service';
-import { mapMutations, mapGetters } from 'vuex';
+import { mapMutations, mapGetters, mapState } from 'vuex';
 import avatar from '../../assets/avatar.jpg';
 
 export default {
@@ -107,6 +107,7 @@ export default {
   methods: {
     ...mapMutations(['setIdentity', 'setPrincipal']),
     ...mapGetters(['getIdentity', 'getPrincipal']),
+    ...mapState(['globalLoading']),
 
     async handleLogin() {
       const authClient = await getAuthClient();
@@ -119,6 +120,10 @@ export default {
           this.setIdentity(identity);
           this.setPrincipal(principal);
         },
+        identityProvider:
+          process.env.DFX_NETWORK === 'ic'
+            ? 'https://identity.ic0.app/#authorize'
+            : process.env.LOCAL_II_CANISTER,
       });
     },
 
@@ -129,7 +134,6 @@ export default {
 
     test() {
       console.log(this.getPrincipal());
-      console.log();
     },
   },
 

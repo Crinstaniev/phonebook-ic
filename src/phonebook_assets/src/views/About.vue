@@ -1,10 +1,10 @@
 <template>
   <div class="about pa-6">
-    <v-card>
+    <v-card class="mx-auto" max-width="500" elevation="2">
       <v-card-title>About IC Phonebook</v-card-title>
       <v-card-text>
         <div class="d-flex justify-center py-5">
-          <v-avatar size="100">
+          <v-avatar size="100" color="black">
             <v-img :src="avatar"> </v-img>
           </v-avatar>
         </div>

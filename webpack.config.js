@@ -8,7 +8,7 @@ const { VueLoaderPlugin } = require('vue-loader');
 let localCanisters, prodCanisters, canisters;
 
 const LOCAL_II_CANISTER =
-  'http://localhost:8000?canisterId=rkp4c-7iaaa-aaaaa-aaaca-cai#authorize';
+  'http://localhost:8000?canisterId=rwlgt-iiaaa-aaaaa-aaaaa-cai';
 
 function initCanisterIds() {
   try {

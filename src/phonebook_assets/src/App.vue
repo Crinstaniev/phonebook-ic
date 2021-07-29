@@ -25,7 +25,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app dark color="black" src="../assets/dfinity-background.jpg">
+    <v-app-bar app dark color="black" :src="appBarBg">
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
       <v-toolbar-title>IC Phonebook</v-toolbar-title>
@@ -38,17 +38,27 @@
         </v-img>
       </div>
     </v-main>
+    <!-- snackbar message -->
+    <v-snackbar v-model="snackbar">
+      {{ snackbarMsg }}
+      <template v-slot:action="{ attrs }">
+        <v-btn color="pink" text v-bind="attrs" @click="snackbar = false">
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </v-app>
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex';
-import { getAuthClient } from './service';
+import { mapGetters, mapMutations, mapState } from 'vuex';
+import { getActor, getAuthClient } from './service';
 import background from '../assets/geometry-background.png';
+import appBarBg from '../assets/dfinity-background.jpg';
 
 export default {
   data: () => ({
-    drawer: null,
+    drawer: false,
     items: [
       { title: 'Home', icon: 'mdi-home', to: '/' },
       { title: 'User', icon: 'mdi-account-circle', to: '/user' },
@@ -56,6 +66,7 @@ export default {
     ],
     right: null,
     backgroundImg: background,
+    appBarBg: appBarBg,
   }),
 
   created() {
@@ -63,8 +74,14 @@ export default {
   },
 
   methods: {
-    ...mapGetters(['getIdentity', 'getPrincipal']),
-    ...mapMutations(['setPrincipal', 'setIdentity']),
+    ...mapGetters(['getIdentity', 'getPrincipal', 'getGlobalLoading']),
+    ...mapMutations([
+      'setPrincipal',
+      'setIdentity',
+      'setGlobalLoading',
+      'setSnackbar',
+      'setSnackbarMsg',
+    ]),
 
     async checkAuthState() {
       const authClient = await getAuthClient();
@@ -74,7 +91,31 @@ export default {
         const principal = identity.getPrincipal().toString();
         this.setIdentity(identity);
         this.setPrincipal(principal);
+        // create book
+        const actor = await getActor(this.getIdentity());
+        this.setGlobalLoading(true);
+        await actor.createBook().then((res) => {
+          console.log(res.msg);
+        });
+        this.setGlobalLoading(false);
       }
+    },
+  },
+
+  computed: {
+    snackbar: {
+      get() {
+        return this.$store.state.snackbar;
+      },
+      set(value) {
+        this.setSnackbar(value);
+      },
+    },
+
+    snackbarMsg: {
+      get() {
+        return this.$store.state.snackbarMsg;
+      },
     },
   },
 };
@@ -83,6 +124,5 @@ export default {
 <style scoped>
 #root-container {
   height: 100%;
-  opacity: 0.9;
 }
 </style>
