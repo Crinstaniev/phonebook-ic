@@ -122,10 +122,10 @@ export default {
           this.setIdentity(identity);
           this.setPrincipal(principal);
         },
-        identityProvider:
-          process.env.DFX_NETWORK === 'ic'
-            ? 'https://identity.ic0.app/#authorize'
-            : process.env.LOCAL_II_CANISTER,
+        // identityProvider:
+        //   process.env.DFX_NETWORK === 'ic'
+        //     ? 'https://identity.ic0.app/#authorize'
+        //     : process.env.LOCAL_II_CANISTER,
       });
     },
 

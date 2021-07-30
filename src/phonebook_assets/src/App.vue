@@ -68,7 +68,7 @@ export default {
       { title: 'Home', icon: 'mdi-home', to: '/' },
       { title: 'User', icon: 'mdi-account-circle', to: '/user' },
       { title: 'About', icon: 'mdi-information', to: '/about' },
-      { title: 'Test', icon: 'mdi-information', to: '/test' },
+      // { title: 'Test', icon: 'mdi-information', to: '/test' },
     ],
     right: null,
     backgroundImg: background,

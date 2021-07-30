@@ -171,8 +171,12 @@ export default {
       this.bookLoading = true;
       const actor = await getActor(this.identity());
       const bookRes = (await actor.getBook())[0];
-      if (!bookRes) return [];
+      if (!bookRes) {
+        this.book = [];
+        return [];
+      }
       if (bookRes.length === 0) {
+        this.book = [];
         this.bookLoading = false;
         return [];
       }
