@@ -15,4 +15,4 @@ node_modules/
 dist/
 
 # VSCode plugins
-.VSCodeCounter/*
+.VSCodeCounter/

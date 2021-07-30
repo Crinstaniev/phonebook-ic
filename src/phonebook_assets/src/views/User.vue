@@ -3,13 +3,7 @@
     <!-- title area -->
     <v-row dense>
       <v-col cols="12">
-        <v-card
-          dark
-          color="black"
-          elevation="2"
-          class="mx-auto"
-          max-width="500"
-        >
+        <v-card dark elevation="2" class="mx-auto" max-width="500">
           <v-card-title>User Info</v-card-title>
         </v-card>
       </v-col>
@@ -74,7 +68,13 @@
               large
               @click="handleLogin"
             >
-              {{ loginButtonText }}
+              <div class="d-flex justify-center align-center">
+                <span v-if="loginButtonText === 'OK'">
+                  LOGIN SUCCESS
+                  <v-icon dark right> mdi-checkbox-marked-circle </v-icon>
+                </span>
+                <span v-if="loginButtonText === 'LOGIN'">LOGIN</span>
+              </div>
             </v-btn>
           </div>
         </v-card>
@@ -86,9 +86,11 @@
 <script>
 import { getAuthClient } from '../service';
 import { mapMutations, mapGetters, mapState } from 'vuex';
+
 import avatar from '../../assets/avatar.jpg';
 
 export default {
+  components: {},
   data() {
     return {
       load: {
@@ -146,7 +148,7 @@ export default {
         return 'LOGIN';
       } else {
         console.log('[INFO] setting text to re-login');
-        return 'RE-LOGIN';
+        return 'OK';
       }
     },
   },

@@ -25,7 +25,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app dark color="black" :src="appBarBg">
+    <v-app-bar app dark color="black" :src="appBarBg" height="56px">
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
       <v-toolbar-title>IC Phonebook</v-toolbar-title>
@@ -34,7 +34,12 @@
     <v-main>
       <div id="root-container">
         <v-img :src="backgroundImg" height="100%">
-          <router-view></router-view>
+          <div
+            class="overflow-y-auto"
+            :style="'max-height:' + mainHeight + 'px'"
+          >
+            <router-view></router-view>
+          </div>
         </v-img>
       </div>
     </v-main>
@@ -63,6 +68,7 @@ export default {
       { title: 'Home', icon: 'mdi-home', to: '/' },
       { title: 'User', icon: 'mdi-account-circle', to: '/user' },
       { title: 'About', icon: 'mdi-information', to: '/about' },
+      { title: 'Test', icon: 'mdi-information', to: '/test' },
     ],
     right: null,
     backgroundImg: background,
@@ -110,6 +116,13 @@ export default {
         return this.$store.state.snackbarMsg;
       },
     },
+
+    mainHeight: {
+      get() {
+        const clientHeight = document.documentElement.clientHeight;
+        return clientHeight - 56;
+      },
+    },
   },
 };
 </script>
@@ -117,5 +130,9 @@ export default {
 <style scoped>
 #root-container {
   height: 100%;
+}
+
+.bg-img {
+  position: fixed;
 }
 </style>
