@@ -76,13 +76,11 @@
     </v-row>
     <!-- render contacts -->
     <v-row><div class="mt-4"></div></v-row>
-    <v-row dense v-for="item in book" :key="item[0]">
-      <v-col cols="12">
-        <v-card class="mx-auto" max-width="500" elevation="2">
-          <v-card-subtitle>{{ item[0] }}</v-card-subtitle>
-        </v-card>
-      </v-col>
-    </v-row>
+    <contact-card
+      :records="book"
+      @delete="handleDelete"
+      :loading="bookLoading"
+    />
   </div>
 </template>
 
@@ -90,26 +88,26 @@
 import { mapGetters, mapMutations, mapState } from 'vuex';
 import { getActor, getAuthClient } from '../service';
 import router from '../router';
+import ContactCard from '../components/ContactCard.vue';
 
 export default {
-  components: {},
-  data() {
-    return {
-      showAddArea: false,
-      valid: false,
-      formData: {
-        name: '',
-        phone: '',
-        desc: '',
-      },
-      formRules: {
-        name: [(v) => !!v.trim() || 'Name is required'],
-        phone: [(v) => !!v.trim() || 'Phone is required'],
-        desc: [(v) => !!v.trim() || 'Description is required'],
-      },
-      book: [],
-    };
-  },
+  components: { ContactCard },
+  data: () => ({
+    bookLoading: false,
+    showAddArea: false,
+    valid: false,
+    formData: {
+      name: '',
+      phone: '',
+      desc: '',
+    },
+    formRules: {
+      name: [(v) => !!v.trim() || 'Name is required'],
+      phone: [(v) => !!v.trim() || 'Phone is required'],
+      desc: [(v) => !!v.trim() || 'Description is required'],
+    },
+    book: [],
+  }),
 
   async mounted() {
     // not permited to enter homepage if not logged in
@@ -141,6 +139,7 @@ export default {
     ...mapGetters(['getIdentity']),
 
     async handleAdd() {
+      this.bookLoading = true;
       if (!this.valid) {
         return;
       }
@@ -155,21 +154,48 @@ export default {
         })
         .then((res) => {
           console.log(res.msg);
+          this.formData = {};
           this.setGlobalLoading(false);
+          this.formData = {
+            name: '',
+            phone: '',
+            desc: '',
+          };
+          this.valid = true;
+          this.showAddArea = false;
         });
       this.fetchBook();
     },
 
     async fetchBook() {
+      this.bookLoading = true;
       const actor = await getActor(this.identity());
       const bookRes = (await actor.getBook())[0];
       if (!bookRes) return [];
       if (bookRes.length === 0) {
+        this.bookLoading = false;
         return [];
       }
-      this.book = bookRes.reverse();
+      const resReverse = bookRes.reverse();
+      this.book = resReverse.map((item) => {
+        return {
+          name: item[0],
+          description: item[1].desc,
+          phone: item[1].phone,
+        };
+      });
       console.log('[INFO] fetch book', this.book);
-      return bookRes;
+      this.bookLoading = false;
+      return this.book;
+    },
+
+    async handleDelete(name) {
+      const actor = await getActor(this.identity());
+      this.bookLoading = true;
+      actor.delete(name).then((res) => {
+        console.log(res.msg);
+        this.fetchBook();
+      });
     },
   },
 
